@@ -118,7 +118,7 @@ const validateReview=(req,res,next)=>{
 // })
 
 app.get("/signup",(req,res)=>{
-  res.render("./Users/signup.ejs")
+  res.render("users/signup.ejs")
 })
 
 app.post("/signup",wrapAsync(async(req,res,next)=>{
