@@ -118,7 +118,7 @@ const validateReview=(req,res,next)=>{
 // })
 
 app.get("/signup",(req,res)=>{
-  res.render("users/signup.ejs")
+  res.render("./Users/signup.ejs")
 })
 
 app.post("/signup",wrapAsync(async(req,res,next)=>{
@@ -141,7 +141,7 @@ app.post("/signup",wrapAsync(async(req,res,next)=>{
   }
 }))
 app.get("/login",(req,res)=>{
-  res.render("users/login.ejs");
+  res.render("./Users/login.ejs");
 })
 
 app.post("/login",saveRedirectUrl,passport.authenticate("local",{
