@@ -92,7 +92,7 @@ app.use((req,res,next)=>{
 
 
 app.get("/",(req,res)=>{
-    res.send("Hi");
+    res.redirect("/listings");
 })
 
 const validateReview=(req,res,next)=>{
