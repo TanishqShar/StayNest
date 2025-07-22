@@ -16,21 +16,46 @@ module.exports.show_route = async (req, res) => {
     res.render("./listings/show.ejs", { listing });
 }
 
-module.exports.create_route=async (req, res) => {
-    let url=req.file.path;
-    let filename = req.file.filename;
-  let result = listingSchema.validate(req.body);
-  console.log(result);
-  if(result.error){
-    throw new ExpressError(400,result.error);
+// module.exports.create_route=async (req, res) => {
+//     let url=req.file.path;
+//     let filename = req.file.filename;
+//   let result = listingSchema.validate(req.body);
+//   console.log(result);
+//   if(result.error){
+//     throw new ExpressError(400,result.error);
+//   }
+//   const newListing = new Listing(req.body.listing);
+//   newListing.owner = req.user._id;
+//   newListing.image = {url,filename};
+//   await newListing.save(); // throws validation error if bad data
+//   req.flash("success","New Listing Created!")
+//   res.redirect("/listings");
+// }
+module.exports.create_route = async (req, res) => {
+  // Defensive check on file upload
+  if (!req.file) {
+    throw new ExpressError(400, "Image file is required");
   }
+
+  const url = req.file.path;
+  const filename = req.file.filename;
+
+  const result = listingSchema.validate(req.body);
+
+  if (result.error) {
+    let errorMessage = result.error.details.map(el => el.message).join(",");
+    throw new ExpressError(400, errorMessage);
+  }
+
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
-  newListing.image = {url,filename};
-  await newListing.save(); // throws validation error if bad data
-  req.flash("success","New Listing Created!")
-  res.redirect("/listings");
-}
+  newListing.image = { url, filename };
+
+  await newListing.save();
+
+  req.flash("success", "New Listing Created!");
+  return res.redirect("/listings");  // Ensure the function exits here
+};
 
 module.exports.edit_route = async (req, res) => {
     let { id } = req.params;
