@@ -35,14 +35,14 @@ main()
         console.log(err);
     })
 async function main(){
-    await mongoose.connect("mongodb+srv://tanishqsharma3097:197919812005@cluster0.4iiifxp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+    await mongoose.connect(dburl);
 }
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
-app.use(express.static(path.join(__dirname,"./public")))
+app.use(express.static(path.join(__dirname,"/public")))
 const wrapAsync = require("./utils/wrapAsync.js");
 const store=MongoStore.create({
   mongoUrl:dburl,
@@ -51,8 +51,12 @@ const store=MongoStore.create({
   },
   touchAfter:24*3600,
 })
+// store.on("error",()=>{
+//   console.log("Error",err);
+// })
 
 const sessionOptions={
+  store,
   secret:process.env.SECRET,
   resave:false,
   saveuninitialized:true,

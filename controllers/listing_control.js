@@ -32,6 +32,9 @@ module.exports.create_route=async (req, res) => {
   res.redirect("/listings");
 }
 
+
+
+
 module.exports.edit_route = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
