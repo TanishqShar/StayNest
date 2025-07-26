@@ -35,7 +35,7 @@ main()
         console.log(err);
     })
 async function main(){
-    await mongoose.connect("mongodb+srv://tanishqsharma3097:197919812005@cluster0.4iiifxp.mongodb.net/staynest?retryWrites=true&w=majority&appName=Cluster0");
+    await mongoose.connect("mongodb+srv://tanishqsharma3097:197919812005@cluster0.4iiifxp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0");
 }
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
